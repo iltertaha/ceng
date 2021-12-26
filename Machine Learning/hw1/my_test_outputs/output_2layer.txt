@@ -1,0 +1,276 @@
+############ TWO LAYER SEARCH STARTS ############
+
+ activation: sigmoid hidden_layer:  256  learning rate:  0.01
+--------------------------------
+early stopped at: epoch 26
+--------final accuracy:   0.009
+
+ activation: sigmoid hidden_layer:  256  learning rate:  0.003
+--------------------------------
+early stopped at: epoch 33
+--------final accuracy:   0.1065
+
+ activation: sigmoid hidden_layer:  256  learning rate:  0.001
+--------------------------------
+early stopped at: epoch 27
+--------final accuracy:   0.148
+
+ activation: sigmoid hidden_layer:  256  learning rate:  0.0003
+--------------------------------
+early stopped at: epoch 47
+--------final accuracy:   0.1615
+
+ activation: sigmoid hidden_layer:  256  learning rate:  0.0001
+--------------------------------
+--------final accuracy:   0.17
+
+ activation: sigmoid hidden_layer:  256  learning rate:  3e-05
+--------------------------------
+--------final accuracy:   0.132
+
+ activation: sigmoid hidden_layer:  512  learning rate:  0.01
+--------------------------------
+early stopped at: epoch 24
+--------final accuracy:   0.01
+
+ activation: sigmoid hidden_layer:  512  learning rate:  0.003
+--------------------------------
+early stopped at: epoch 33
+--------final accuracy:   0.095
+
+ activation: sigmoid hidden_layer:  512  learning rate:  0.001
+--------------------------------
+early stopped at: epoch 26
+--------final accuracy:   0.159
+
+ activation: sigmoid hidden_layer:  512  learning rate:  0.0003
+--------------------------------
+early stopped at: epoch 37
+--------final accuracy:   0.1675
+
+ activation: sigmoid hidden_layer:  512  learning rate:  0.0001
+--------------------------------
+early stopped at: epoch 83
+--------final accuracy:   0.1635
+
+ activation: sigmoid hidden_layer:  512  learning rate:  3e-05
+--------------------------------
+--------final accuracy:   0.1425
+
+ activation: sigmoid hidden_layer:  1024  learning rate:  0.01
+--------------------------------
+early stopped at: epoch 26
+--------final accuracy:   0.01
+
+ activation: sigmoid hidden_layer:  1024  learning rate:  0.003
+--------------------------------
+early stopped at: epoch 29
+--------final accuracy:   0.089
+
+ activation: sigmoid hidden_layer:  1024  learning rate:  0.001
+--------------------------------
+early stopped at: epoch 25
+--------final accuracy:   0.1705
+
+ activation: sigmoid hidden_layer:  1024  learning rate:  0.0003
+--------------------------------
+early stopped at: epoch 31
+--------final accuracy:   0.159
+
+ activation: sigmoid hidden_layer:  1024  learning rate:  0.0001
+--------------------------------
+early stopped at: epoch 60
+--------final accuracy:   0.162
+
+ activation: sigmoid hidden_layer:  1024  learning rate:  3e-05
+--------------------------------
+--------final accuracy:   0.152
+
+ activation: tanh hidden_layer:  256  learning rate:  0.01
+--------------------------------
+early stopped at: epoch 60
+--------final accuracy:   0.01
+
+ activation: tanh hidden_layer:  256  learning rate:  0.003
+--------------------------------
+early stopped at: epoch 42
+--------final accuracy:   0.0515
+
+ activation: tanh hidden_layer:  256  learning rate:  0.001
+--------------------------------
+early stopped at: epoch 23
+--------final accuracy:   0.1175
+
+ activation: tanh hidden_layer:  256  learning rate:  0.0003
+--------------------------------
+early stopped at: epoch 26
+--------final accuracy:   0.155
+
+ activation: tanh hidden_layer:  256  learning rate:  0.0001
+--------------------------------
+early stopped at: epoch 46
+--------final accuracy:   0.1505
+
+ activation: tanh hidden_layer:  256  learning rate:  3e-05
+--------------------------------
+--------final accuracy:   0.1505
+
+ activation: tanh hidden_layer:  512  learning rate:  0.01
+--------------------------------
+early stopped at: epoch 25
+--------final accuracy:   0.0095
+
+ activation: tanh hidden_layer:  512  learning rate:  0.003
+--------------------------------
+early stopped at: epoch 37
+--------final accuracy:   0.047
+
+ activation: tanh hidden_layer:  512  learning rate:  0.001
+--------------------------------
+early stopped at: epoch 22
+--------final accuracy:   0.13
+
+ activation: tanh hidden_layer:  512  learning rate:  0.0003
+--------------------------------
+early stopped at: epoch 23
+--------final accuracy:   0.14
+
+ activation: tanh hidden_layer:  512  learning rate:  0.0001
+--------------------------------
+early stopped at: epoch 33
+--------final accuracy:   0.1475
+
+ activation: tanh hidden_layer:  512  learning rate:  3e-05
+--------------------------------
+early stopped at: epoch 82
+--------final accuracy:   0.156
+
+ activation: tanh hidden_layer:  1024  learning rate:  0.01
+--------------------------------
+early stopped at: epoch 35
+--------final accuracy:   0.0085
+
+ activation: tanh hidden_layer:  1024  learning rate:  0.003
+--------------------------------
+early stopped at: epoch 37
+--------final accuracy:   0.0595
+
+ activation: tanh hidden_layer:  1024  learning rate:  0.001
+--------------------------------
+early stopped at: epoch 21
+--------final accuracy:   0.121
+
+ activation: tanh hidden_layer:  1024  learning rate:  0.0003
+--------------------------------
+early stopped at: epoch 21
+--------final accuracy:   0.13
+
+ activation: tanh hidden_layer:  1024  learning rate:  0.0001
+--------------------------------
+early stopped at: epoch 27
+--------final accuracy:   0.143
+
+ activation: tanh hidden_layer:  1024  learning rate:  3e-05
+--------------------------------
+early stopped at: epoch 56
+--------final accuracy:   0.1495
+
+ activation: relu hidden_layer:  256  learning rate:  0.01
+--------------------------------
+early stopped at: epoch 85
+--------final accuracy:   0.01
+
+ activation: relu hidden_layer:  256  learning rate:  0.003
+--------------------------------
+early stopped at: epoch 36
+--------final accuracy:   0.046
+
+ activation: relu hidden_layer:  256  learning rate:  0.001
+--------------------------------
+early stopped at: epoch 31
+--------final accuracy:   0.1565
+
+ activation: relu hidden_layer:  256  learning rate:  0.0003
+--------------------------------
+early stopped at: epoch 35
+--------final accuracy:   0.1545
+
+ activation: relu hidden_layer:  256  learning rate:  0.0001
+--------------------------------
+early stopped at: epoch 48
+--------final accuracy:   0.1555
+
+ activation: relu hidden_layer:  256  learning rate:  3e-05
+--------------------------------
+--------final accuracy:   0.147
+
+ activation: relu hidden_layer:  512  learning rate:  0.01
+--------------------------------
+early stopped at: epoch 21
+--------final accuracy:   0.01
+
+ activation: relu hidden_layer:  512  learning rate:  0.003
+--------------------------------
+early stopped at: epoch 28
+--------final accuracy:   0.094
+
+ activation: relu hidden_layer:  512  learning rate:  0.001
+--------------------------------
+early stopped at: epoch 26
+--------final accuracy:   0.175
+
+ activation: relu hidden_layer:  512  learning rate:  0.0003
+--------------------------------
+early stopped at: epoch 30
+--------final accuracy:   0.164
+
+ activation: relu hidden_layer:  512  learning rate:  0.0001
+--------------------------------
+early stopped at: epoch 41
+--------final accuracy:   0.159
+
+ activation: relu hidden_layer:  512  learning rate:  3e-05
+--------------------------------
+early stopped at: epoch 91
+--------final accuracy:   0.1535
+
+ activation: relu hidden_layer:  1024  learning rate:  0.01
+--------------------------------
+early stopped at: epoch 85
+--------final accuracy:   0.01
+
+ activation: relu hidden_layer:  1024  learning rate:  0.003
+--------------------------------
+early stopped at: epoch 30
+--------final accuracy:   0.047
+
+ activation: relu hidden_layer:  1024  learning rate:  0.001
+--------------------------------
+early stopped at: epoch 26
+--------final accuracy:   0.1725
+
+ activation: relu hidden_layer:  1024  learning rate:  0.0003
+--------------------------------
+early stopped at: epoch 29
+--------final accuracy:   0.175
+
+ activation: relu hidden_layer:  1024  learning rate:  0.0001
+--------------------------------
+early stopped at: epoch 38
+--------final accuracy:   0.152
+
+ activation: relu hidden_layer:  1024  learning rate:  3e-05
+--------------------------------
+early stopped at: epoch 72
+--------final accuracy:   0.149
+############ TWO LAYER SEARCH ENDS ############
+BEST RESULT with VALID LOSS :  3.414789706468582
+Train Loss: 2.4796276702880857
+Trained Epoch: 100
+Validation Accuracy: 0.17
+Activation Function: sigmoid
+Hidden Layer Size: 256
+Learning Rate: 0.0001
+Layer count: 2
+Running inference on Test Data
+Saved inference_result.txt

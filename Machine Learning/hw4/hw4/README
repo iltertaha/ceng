@@ -1,0 +1,45 @@
+## CENG 499 HW4
+
+This work belongs to İlter Taha Aktolga 2236891
+
+- Use python 3 to run the following scripts mentioned under **How to run?** title.
+
+- HMM implementation assumes there are no string data in either the observation or the states. All the data given to the forward and viterbi functions will be numeric.
+
+
+
+## USED LIBRARIES
+- numpy
+- time (to measure train and test time since it takes approx 9-10 minutes)
+- string (to tokenize vocab data)
+- re ( to tokenize with regular expressions)
+- copy (to ensure the deep copy of the important list element in forward algorithm)
+
+## How to run?
+
+- Extract hw4.zip to a folder.
+- Put your hw4_data folder under hw4 folder. *(included in the provided zip. But ensure it is exist before start testing.)*
+- Check that hw4_data contains **"news"** folder.
+    - Under **"news"** folder  there are 4 txt files namely:
+       -  train_data.txt
+       -  train_labels.txt
+       - test_data.txt
+       - test_labels.txt
+   
+- Make sure that nb.py and hmm.py resides in the same directory with hw4_data.    
+   
+ 
+### Naive Bayes Part
+- **IMPORTANT:** Since the optimization is optional, this implementation is a naive approach. :D It takes 9-10 minute to finish the execution. Therefore informative print statements are added besides the accuracy print on the test dataset. Please wait till the program stops.  Sample output can be seen from the sample_nb_out.txt under the hw4 folder.
+
+-  To test Naive Bayes, execute the following command. 
+	- `python3 nb.py`
+
+- It will create vocabulary, then will be trained on train dataset and tested on the test dataset. At each step necessary information is printed to the terminal.
+-  At the end accuracy on test data is printed.
+- **Due to a little long execution time, ** time is measured while training and testing.  
+- 
+### Hidden Markov Part 
+- HMM functions are implemented in hmm.py
+- You can import hmm as a module, like in hmm_mini_test.py.
+-  Use the functions by giving the appropriate values to parameters as stated in the function signature in hmm.py

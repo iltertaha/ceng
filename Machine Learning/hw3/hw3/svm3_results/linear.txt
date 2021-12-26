@@ -1,0 +1,37 @@
+loaded data
+traindata_shape  (1953, 3072)
+trainlabels_shape  (1953,)
+testdata_shape  (1953, 3072)
+testlabels_shape  (1953,)
+after reshape
+traindata_shape  (1953, 3072)
+trainlabels_shape  (1953,)
+testdata_shape  (1953, 3072)
+testlabels_shape  (1953,)
+normalized data
+norm traindata_shape  (1953, 3072)
+norm testdata_shape  (1953, 3072)
+# Grid search starts 
+
+
+Best parameters
+
+{'C': 1, 'kernel': 'linear'}
+Grid scores with kfold cross validation k=5 by default
+
+0.645 (+/-0.055) for {'C': 0.01, 'kernel': 'linear'}
+0.676 (+/-0.031) for {'C': 0.1, 'kernel': 'linear'}
+0.708 (+/-0.056) for {'C': 1, 'kernel': 'linear'}
+0.707 (+/-0.056) for {'C': 10, 'kernel': 'linear'}
+0.707 (+/-0.056) for {'C': 100, 'kernel': 'linear'}
+Results on Test Set
+
+              precision    recall  f1-score   support
+
+           0       0.77      0.77      0.77       982
+           1       0.77      0.76      0.77       971
+
+    accuracy                           0.77      1953
+   macro avg       0.77      0.77      0.77      1953
+weighted avg       0.77      0.77      0.77      1953
+

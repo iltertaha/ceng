@@ -1,0 +1,16 @@
+Reading train_data.txt
+total train sentence:  745
+Reading train_labels.txt
+total train label:  745
+Reading test_data.txt
+total test sentence 745
+total test label:  745
+Creating vocabulary
+Vocabulary contains 20130 words
+training started
+training ended.
+train lasted 98.84720158576965 seconds
+started testing
+test lasted 499.14532589912415 seconds
+Test Accuracy:  0.959731543624161
+
