@@ -1,0 +1,246 @@
+#/* $begin ncopy-ys */
+##################################################################
+# ncopy.ys - Copy a src block of len words to dst.
+# Return the number of positive words (>0) contained in src.
+#
+# Include your name and ID here.
+# İlter Taha Aktolga 2236891
+#
+# Describe how and why you modified the baseline code.
+#
+#
+# At the beginning,I've changed register increment/decrement operations
+# with IADDQ operation.This way, I saved 1 extra irrmovq operation.
+# (For decrement,I used negative values with iaddq)
+#
+# I've done loop unrolling with factor 10. For the remaining ones 
+# at the end, I've created a jump table to manage them.
+# While creating jump table, I tried several different combinations.
+# Among them, I achieved best performance by accessing the jump table
+# in reverse order to handle large number of remainings fast.
+# For address operation, instead of multiplying with 8,I made addition
+# 3 times in a row.
+# To avoid load-use hazards, I didn't use registers immediately.
+# 
+# I tried to use less "jumps" since it insert bubbles and requires 
+# more space in code.
+# I also tried as much as possible not to use loaded registers immediately.
+# Therefore,during the loop unrolling, I've made operations one by one.
+
+# Generally I saw that when 1 or 2 values left, it is much faster to handle before jump to that case
+# So, I've moved regardless of checking jump table.
+# Detailed info's are commented end of the lines.	
+
+##################################################################
+# Do not modify this portion
+# Function prologue.
+# %rdi = src, %rsi = dst, %rdx = len
+ncopy:
+
+##################################################################
+# You can modify this portion
+	# Loop header
+	iaddq $-9,%rdx		# to check if length < 10
+	jle Left		# if true then we can't unroll using 10 
+					# else continue the loop
+
+Loop:	
+	mrmovq (%rdi), %rbx	# read val1
+	mrmovq 8(%rdi), %r8 # read val2
+	mrmovq 16(%rdi), %r9 # read val3
+	mrmovq 24(%rdi), %r10 # read val4
+	mrmovq 32(%rdi), %r11 # read val5
+	mrmovq 40(%rdi), %r12 # read val6
+	
+	mrmovq 48(%rdi), %r13 # read val7
+	rmmovq %rbx, (%rsi)
+	rmmovq %r8,8(%rsi) #move val2 to dest2
+	mrmovq 56(%rdi), %r14 # read val8
+
+	
+
+	andq %rbx,%rbx #check if rbx is positive
+	jle Not_count_1 # if not positive dont increment
+	iaddq $1,%rax # if positive increment
+	
+
+Not_count_1:
+	andq %r8,%r8 # check if positive
+	mrmovq 64(%rdi),%rbx # read val9 with val1's register
+	mrmovq 72(%rdi), %r8 # read val10 with val2's register
+	
+	jle Not_count_2 #not positive
+	iaddq $1,%rax
+
+Not_count_2:
+	rmmovq %r10,24(%rsi) #move val4 to dest4
+	rmmovq %r9,16(%rsi)  #move val3 to dest3
+	andq %r9,%r9 #check if positive
+	jle Not_count_3 #not positive
+	iaddq $1,%rax 
+
+#all 10 data block has been read for k=10  unroll
+
+Not_count_3:
+	
+	andq %r10,%r10 # check if positive
+	jle Not_count_4 #not positive
+	iaddq $1,%rax #positive
+
+Not_count_4:
+	rmmovq %r11,32(%rsi) #move val5 to dest5
+	andq %r11,%r11 # check if positive
+	jle Not_count_5 #not positive
+	iaddq $1,%rax #positive
+
+Not_count_5:
+	rmmovq %r12,40(%rsi) #move val6 to dest6
+	andq %r12,%r12 # check if positive
+	jle Not_count_6 #not positive
+	iaddq $1,%rax #positive
+
+Not_count_6:
+	rmmovq %r13,48(%rsi) #move val7 to dest7
+	andq %r13,%r13 # check if positive
+	jle Not_count_7 #not positive
+	iaddq $1,%rax #positive
+
+Not_count_7:
+	rmmovq %r14,56(%rsi) #move val8 to dest8
+	andq %r14,%r14 # check if positive
+	jle Not_count_8 #not positive
+	iaddq $1,%rax #positive
+
+Not_count_8:
+	rmmovq %rbx,64(%rsi) #move val9 to dest9
+	andq %rbx,%rbx # check if positive
+	jle Not_count_9 #not positive
+	iaddq $1,%rax #positive
+
+Not_count_9:
+	rmmovq %r8,72(%rsi) #move val10 to dest10
+	andq %r8,%r8 # check if positive
+	jle Not_count_fin #not positive
+	iaddq $1,%rax #positive
+
+Not_count_fin:
+	
+	
+	iaddq $80, %rsi #next 10 block dest ptr
+	iaddq $80, %rdi #next 10 block source ptr
+	iaddq $-10,%rdx # check if whether the remaining nums are greater than 10
+	jg Loop # if remaining numbers are greater continue to unroll
+	
+
+Left:
+	#since there is no shift operation
+	#used add to multiply with 8
+	addq %rdx,%rdx 
+	addq %rdx,%rdx
+	addq %rdx,%rdx
+	
+	mrmovq Left_table(%rdx),%rdx  #select remaining case
+
+	
+	mrmovq 8(%rdi),%r11 # read second element to add directly
+	mrmovq (%rdi), %r10 # read first element to add directly
+	pushq %rdx  
+	ret  #go to selected left case
+
+#.align 8
+	.quad Done
+	.quad left1
+	.quad left2
+	.quad left3
+	.quad left4
+	.quad left5
+	.quad left6
+	.quad left7	
+	.quad left8
+Left_table:  # this is our jump table to handle remainings
+	.quad left9
+
+left9:  #9 elements left
+	mrmovq 64(%rdi), %rcx  # move in reverse order same as in the unroll.
+	mrmovq 56(%rdi), %rbx  # load 8th
+	rmmovq %rcx,64(%rsi)   # move 9th to the dest
+	andq %rcx,%rcx         # check flags
+	jle left8_notmove      # if negative don't increment
+	iaddq $1,%rax          # if positive increment
+
+left8:  #8 elements left
+	mrmovq 56(%rdi), %rbx   # if at the start you have 8 left numbers
+left8_notmove:              # start from here if you were in left9 case
+	mrmovq 48(%rdi), %rcx	# load 7th
+	rmmovq %rbx, 56(%rsi)   # move 8th to dest
+	andq %rbx,%rbx			# check flags
+	jle left7_notmove		# if negative don't increment
+	iaddq $1,%rax			# if positive increment 
+
+left7: #7 elements left
+	mrmovq 48(%rdi), %rcx   # if at the start you have 7 left numbers
+left7_notmove: 			    # start from here if you were in left8 case
+	mrmovq 40(%rdi), %rbx	# load 6th
+	rmmovq %rcx, 48(%rsi)   # move 7th
+	andq %rcx,%rcx			# check flags
+	jle left6_notmove		# if negative don't increment 
+	iaddq $1,%rax			# if positive increment 
+	
+left6: #6 elements left
+	mrmovq 40(%rdi), %rbx  # if at the start you have 6 left numbers
+left6_notmove:			   # start from here if you were in left7 case
+	mrmovq 32(%rdi), %rcx  # load 5th
+	rmmovq %rbx, 40(%rsi)  # move 6th
+	andq %rbx,%rbx         # check flags
+	jle left5_notmove      # if negative don't increment 
+	iaddq $1,%rax		   # if positive increment 
+
+left5: #5 elements left    
+	mrmovq 32(%rdi), %rcx  # if at the start you have 5 left numbers
+left5_notmove:			   # start from here if you were in left6 case
+	mrmovq 24(%rdi), %rbx  # load 4th
+	rmmovq %rcx, 32(%rsi)  # move 5th
+	andq %rcx,%rcx         # check flags
+	jle left4_notmove      # if negative don't increment 
+	iaddq $1,%rax	       # if positive increment 
+
+left4: #4 elements left
+	mrmovq 24(%rdi), %rbx  # if at the start you have 4 left numbers
+left4_notmove:			   # start from here if you were in left5 case
+	mrmovq 16(%rdi), %rcx  # load 3rd
+	rmmovq %rbx, 24(%rsi)  # move 4th
+	andq %rbx,%rbx         # check flags
+	jle left3_notmove      # if negative don't increment 
+	iaddq $1,%rax	       # if positive increment 
+
+left3: #3 elements left
+	mrmovq 16(%rdi), %rcx  # if at the start you have 3 left numbers
+left3_notmove:   		   # start from here if you were in left4 case
+	rmmovq %rcx,16(%rsi)   # move 3rd
+	andq %rcx, %rcx        # check flags
+	jle left2              # if negative don't increment 
+	iaddq $1,%rax	       # if positive increment 
+
+left2: #2 elements left
+	rmmovq %r11,8(%rsi)    # we've already loaded second
+	andq %r11, %r11		   # check flags
+	jle left1              # if negative don't increment 
+	iaddq $1,%rax          # if positive increment 
+
+left1: #1 elements left
+	rmmovq %r10, (%rsi)	   # we have already loaded first
+	andq %r10,%r10         # check flags
+	jle Done               # if negative don't increment 
+	iaddq $1, %rax         # if positive increment 
+
+##################################################################
+# Do not modify the following section of code
+# Function epilogue.
+Done:
+	ret
+##################################################################
+# Keep the following label at the end of your function
+End:
+#/* $end ncopy-ys */
+
+

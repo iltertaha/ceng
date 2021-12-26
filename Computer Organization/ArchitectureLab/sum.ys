@@ -1,0 +1,47 @@
+#e2236891 İlter Taha Aktolga
+
+.pos 0
+	irmovq stack, %rsp # set up the stack pointer
+	call main 
+	halt
+
+
+
+.align 8
+ele1:
+        .quad 0x00a
+        .quad ele2
+
+ele2:
+        .quad 0x0b0
+        .quad ele3
+
+ele3:
+        .quad 0xc00
+        .quad 0
+
+main:
+        
+        irmovq ele1,%rdi
+        call sum_list # call sum func
+        ret
+
+
+
+sum_list:
+        xorq %rax,%rax # value is initialized to 0
+        jmp check #check before iteration
+
+loop:   
+        mrmovq (%rdi),%rcx #pass current element to register
+        addq %rcx,%rax #add current with sum
+        mrmovq 8(%rdi),%rdi #move to next element
+    
+check:
+        andq %rdi,%rdi #while ls
+        jne loop #if ls then take loop
+        ret # else return 
+
+.pos 0x200
+stack:
+        

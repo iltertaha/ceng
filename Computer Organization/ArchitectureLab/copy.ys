@@ -1,0 +1,53 @@
+#e2236891 İlter Taha Aktolga
+
+.pos 0
+        irmovq stack, %rsp #stack set
+        call main
+        halt
+
+
+.align 8
+
+# Source block
+src:
+	.quad 0x00a
+	.quad 0x0b0
+	.quad 0xc00
+
+# Destination block
+dest:
+	.quad 0x111
+	.quad 0x222
+	.quad 0x333
+
+
+main:
+        
+        irmovq src, %rdi #first parameter 
+        irmovq dest, %rsi #second parameter
+        irmovq $3, %rdx #third parameter
+        call copy_block #func call copy_block
+        ret #terminate program
+
+copy_block:
+        xorq %rax, %rax #init rax as zero
+        andq %rdx, %rdx #while len
+        irmovq $8,%r9 # this is for incrementing the src pointer using rrmovq in loop part
+        irmovq $1,%r10 # this is for decrementing the len
+        jmp check
+
+loop:
+        mrmovq (%rdi), %r8 # assign src value to val
+        rmmovq %r8, (%rsi) # assign dest value to *dest
+        xorq %r8, %rax # checksum
+        addq %r9,%rdi #increment src pointer
+        addq %r9,%rsi #increment dest pointer
+        subq %r10,%rdx #decrement len
+
+check:
+        jne loop #continue if not null
+        ret #return
+
+
+.pos 0x200
+stack:
