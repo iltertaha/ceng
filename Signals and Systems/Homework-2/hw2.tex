@@ -1,0 +1,493 @@
+\documentclass[10pt,a4paper, margin=1in]{article}
+\usepackage{fullpage}
+\usepackage{amsfonts, amsmath, pifont}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tkz-euclide}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=10mm,
+ right=10mm,
+ top=10mm,
+ bottom=10mm,
+ }
+ % Write both of your names here. Fill exxxxxxx with your ceng mail address.
+ \author{
+  Bolat, Burak\\
+  \texttt{e2237097@ceng.metu.edu.tr}
+  \and
+  Aktolga, İlter Taha\\
+  \texttt{e2236891@ceng.metu.edu.tr}
+}
+\title{CENG 384 - Signals and Systems for Computer Engineers \\
+Spring 2020 \\
+Written Assignment 2}
+
+\begin{filecontents}{q3.dat}
+  n  xn
+ -1  1
+  0  2
+\end{filecontents}
+\begin{filecontents}{hn.dat}
+  n  xn
+ -1  2
+  0  0
+  1  1
+\end{filecontents}
+\begin{filecontents}{hnk.dat}
+  n  xn
+  -1  1
+  0  0
+  1  2
+\end{filecontents}
+\begin{filecontents}{y.dat}
+  n  xn
+  -2  2
+  -1  4
+  0  1
+  1  2
+\end{filecontents}
+
+\begin{document}
+\maketitle
+
+
+
+\noindent\rule{19cm}{1.2pt}
+
+\begin{enumerate}
+
+\item %write the solution of q1
+    \begin{enumerate}
+    % Write your solutions in the following items.
+    \item %write the solution of q1a
+    
+    \textbf{Memory}: This system is not a memoryless system since output at time n depends not only on n. It depends on inputs at time $n-1,$ $n-2,$ $...,$ $n-\infty$\\
+    \textbf{Stability}: This system is stable. Because, bounded inputs leads bounded outputs. If input was multiplied with n, output would be not stable.\\
+    \textbf{Causality}: This system is causal since it is an accumulator system, it depends on inputs at time $n-1,$ $n-2,$ $...,$ $n-\infty$, i.e. up to time n.\\
+    \textbf{Linearity}: Linear. If input signal is multiplied by $\alpha$, the output signal is also multiplied by $\alpha$.\\
+    \begin{equation}
+	\begin{split}
+	    z[n] = \sum_{k=1}^{\infty}\alpha x[n-k] = \alpha \sum_{k=1}^{\infty}x[n-k] = \alpha y[n]\\
+	\end{split}
+	\end{equation}
+	\textbf{Invertibility}: The system is invertible, distinct inputs lead to distinct outputs. Each n gives different output.
+	\\
+	\textbf{Time Invariance}: First, delay input by time $\alpha$\\
+	\begin{equation}
+	\begin{split}
+	    x_1[n] &= x[n+\delta]\\
+	    y_1[n] &= \sum^{\infty}_{k=1}x[n+\delta-k]\\
+	\end{split}
+    \end{equation}
+    Secondly: delay output by time $\alpha$\\
+    \begin{equation}
+        \begin{split}
+            y_2[n] &= y[n+\delta]\\
+            y_2[n] &= \sum^{\infty}_{k=1}x[n+\delta-k]\\
+        \end{split}
+    \end{equation}
+    Since $y_1[n] = y_2[n]$, the sytem is time invariant.\\
+    \item %write the solution of q1b
+    \textbf{Memory}: The system is not memoryless. The output does not depends on the input at time t.\\
+    \textbf{Stability}: Non-stable. Assume $x(2t+3)$ is constant, output is not constant.\\
+    \textbf{Causality}: Not causal. It doesn't depend on input that is up to \and including time t.\\
+    \textbf{Linearity}: Linear. If input signal is multpilied by $\alpha$, the output signal is also multiplied by $\alpha$.\\
+    \begin{equation}
+	\begin{split}
+	    \alpha y(t) = \alpha tx(2t+3)\\
+	\end{split}
+	\end{equation}
+    \textbf{Invertibility}: The system is invertible, since there is no input that results in same output with any other. Simply, we can check with input $z(t) = -x(t)$ and this gives $-y(n)$.\\
+    \textbf{Time Invariance}: First, delay input by time $\alpha$\\
+	\begin{equation}
+	\begin{split}
+	    x_1(t) &= x(t+\delta)\\
+	    y_1(t) &= tx(2(t+\delta)+3)\\
+	\end{split}
+    \end{equation}
+    Secondly: delay output by time $\alpha$\\
+    \begin{equation}
+        \begin{split}
+            y_2(t) &= y(t+\delta)\\
+            y_2(t) &= (t+\delta)x(2(t+\delta)+3)\\
+        \end{split}
+    \end{equation}
+    Since $y_1(t) \neq y_2(t)$, the sytem is not time invariant.\\
+    \end{enumerate}
+
+
+\item %write the solution of q2
+    \begin{enumerate}
+    % Write your solutions in the following items.
+    \item %write the solution of q2a
+    The differential equation for the given system is presented below. In the second step, we further simplify the expression for the sake of presentation.
+    \begin{equation}
+	\begin{split}
+		\int_{-\infty}^{t} x(\tau) - 4y(\tau) d \tau & = y(t)\\
+		\frac{dy(t)}{dt} + 5y(t) & = x(t)
+	\end{split}
+	\end{equation} 
+    \item %write the solution of q2b
+    	For the input $x(t)=(e^{-t}+e^{-3t})u(t)$ we have the following differential equation 
+	\begin{equation}
+	y'(t) + 5y(t) = e^{-t}+e^{-3t} \text{\quad for } t > 0 
+	\end{equation}
+	It is not a homogeneous differential equation therefore, the solution is in the form of $y(t)=y_H(t)+y_P(t)$. \\
+	In order to find $y_H(t)$ part of the solution we need to solve the following equation
+	\begin{equation}
+	 y'(t) + 5y(t) =0
+	\end{equation}
+	We hypothesize the solution as $y_H(t)=Ke^{\lambda t}$ and we put this into the differential equation. \\
+    	\begin{equation}
+	\begin{split}
+		K\lambda e^{\lambda t} + 5 K e^{\lambda t} = 0 & \\
+	Ke^{\lambda t} (\lambda + 5) = 0 & \\
+		\lambda = -5 & \\
+		y_H(t) = Ke^{-5t} &\text{\quad for } t>0 
+	\end{split}
+	\end{equation}	
+	For particular solution, we will hypothesize a solution of the form of an exponential, such that: \\$y_p(t) = Ae^{-t}+Be^{-3t}$.To obtain $y_P(t)$ part of the solution we need to solve the following equation: 
+	\begin{equation}
+	y'(t)+5y(t)=e^{-t} + e^{-3t} \text{\quad for } t>0
+	\end{equation}
+	We hypothesize $y_{P}(t)=Ae^{-t}+Be^{-3t}$ and plug it into the above equation.
+	\begin{equation}
+	\begin{split}
+	-Ae^{-t}-3Be^{-3t}+5(Ae^{-t}+Be^{-3t}) &= e^{-t} + e^{-3t} \text{\quad for } t>0 \\
+	-Ae^{-t}-3Be^{-3t}+5Ae^{-t}+5Be^{-3t} &= e^{-t}+e^{-3t} \text{\quad for } t>0 \\
+	4Ae^{-t}+2Be^{-3t} & = e^{-t}+e^{-3t} \\
+	A &= \frac{1}{4} \\
+	B &= \frac{1}{2}
+	\end{split}
+	\end{equation}
+	We've found $y_P(t)=\frac{e^{-t}}{4}+\frac{e^{-3t}}{2}$ for $t>0$ \\ \\
+	Finally we have: \\
+	\begin{equation}
+	y'(t) = Ke^{-5t} + \frac{1}{4}e^{-t} + \frac{1}{2}e^{-3t} \text{\quad for } t>0
+	\end{equation}
+	
+	Given that the system is initially at rest therefore we say that $y(0)=0$ which yields to
+	\begin{equation}
+	\begin{split}
+	y(0) & = K + \frac{1}{4} + \frac{1}{2} = 0 \\
+	K & = - \frac{3}{4} \\
+	y(t) & = - \frac{3e^{-5t}}{4}  + \frac{e^{-t}}{4}+\frac{e^{-3t}}{2} \text{\quad for } t>0\\
+	y(t) & = \left( - \frac{3e^{-5t}}{4}  + \frac{e^{-t}}{4}+\frac{e^{-3t}}{2} \right) u(t)
+	\end{split}
+	\end{equation}
+    \end{enumerate}
+
+\item %write the solution of q3     
+    \begin{enumerate}
+    % Write your solutions in the following items.
+    \item %write the solution of q3a
+    
+    Graphs for $x[n] = 2\delta [n] + \delta [n+1]$ and $h[n] = \delta [n-1] + 2\delta [n+1]$\\
+    
+    \begin{figure}[H]
+    \begin{tikzpicture}[scale=1.0] 
+      \begin{axis}[
+          xshift=7cm,
+          enlargelimits=0.05,
+          axis lines=middle,
+          xlabel={$n$},
+          ylabel={$\boldsymbol{x[n]}$},
+          xtick={-1,0},
+          ytick={0,1,2},
+          extra x ticks={0}, 
+          ymin=0, ymax=3,
+          xmin=-2, xmax=1,
+          every axis x label/.style={at={(ticklabel* cs:1.05)}, anchor=west,},
+          every axis y label/.style={at={(ticklabel* cs:1.05)}, anchor=south,}
+        ]
+        \addplot [ycomb, black, thick, mark=*] table [x={n}, y={xn}] {q3.dat};
+      \end{axis}
+    \end{tikzpicture}
+\hskip 5pt
+    \begin{tikzpicture}[scale=1.0] 
+      \begin{axis}[
+          xshift=7cm,
+          enlargelimits=0.05,
+          axis lines=middle,
+          xlabel={$n$},
+          ylabel={$\boldsymbol{h[n]}$},
+          xtick={-1,0,1},
+          ytick={0,1,2},
+          extra x ticks={0}, 
+          ymin=0, ymax=3,
+          xmin=-2, xmax=2,
+          every axis x label/.style={at={(ticklabel* cs:1.05)}, anchor=west,},
+          every axis y label/.style={at={(ticklabel* cs:1.05)}, anchor=south,}
+        ]
+        \addplot [ycomb, black, thick, mark=*] table [x={n}, y={xn}] {hn.dat};
+      \end{axis}
+    \end{tikzpicture}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \begin{tikzpicture}[scale=1.0] 
+      \begin{axis}[
+          xshift=7cm,
+          enlargelimits=0.05,
+          axis lines=middle,
+          xlabel={$n$},
+          ylabel={$\boldsymbol{h[n-k]}$},
+          xtick={-1,0,1},
+          extra x ticks={0},
+          extra x tick labels={$n$},
+          xticklabels = {$n-1$, $n$, $n+1$},
+          ytick={0,1,2},
+          ymin=0, ymax=3,
+          xmin=-2, xmax=2,
+          every axis x label/.style={at={(ticklabel* cs:1.05)}, anchor=west,},
+          every axis y label/.style={at={(ticklabel* cs:1.05)}, anchor=south,}
+        ]
+        \addplot [ycomb, black, thick, mark=*] table [x={n}, y={xn}] {hnk.dat};
+      \end{axis}
+    \end{tikzpicture}
+    \caption{h[n - k] to slide}
+\end{figure}
+    By sliding h[n-k] from left to right, we get respectively:\\
+    for $n = -2$, $y[-2] = (1)(2) + (2)(0) = 2$\\
+    for $n = -1$, $y[-1] = (1)(0) + (2)(2) = 4$\\
+    for $n = 0$, $y[-1] = (1)(1) + (2)(0) = 1$\\
+    for $n = 1$, $y[-1] = (1)(0) + (2)(1) = 2$\\
+    
+\begin{figure}[H]
+\centering
+    \begin{tikzpicture}[scale=1.0] 
+      \begin{axis}[
+          xshift=7cm,
+          enlargelimits=0.05,
+          axis lines=middle,
+          xlabel={$n$},
+          ylabel={$\boldsymbol{y[n]}$},
+          xtick={-2,-1,0,1},
+          ytick={0,1,2,3,4},
+          extra x ticks={0}, 
+          ymin=0, ymax=5,
+          xmin=-3, xmax=2,
+          every axis x label/.style={at={(ticklabel* cs:1.05)}, anchor=west,},
+          every axis y label/.style={at={(ticklabel* cs:1.05)}, anchor=south,}
+        ]
+        \addplot [ycomb, black, thick, mark=*] table [x={n}, y={xn}] {y.dat};
+      \end{axis}
+    \end{tikzpicture}
+\end{figure}
+
+    \item %write the solution of q3b
+    Derivation of $x(t)$ results in $\delta (t-1) + \delta (t+1)$\\
+    Thus, convolution becomes $y(t) = (\delta (t-1) + \delta (t+1)) * h(t)$\\
+    By distributive property of convolution $y(t) = (\delta (t-1) * h(t)) + (\delta (t+1) * h(t))$\\
+    \begin{equation}
+        \begin{split}
+            y(t) = h(t-1) + h(t+1)\\
+            y(t) = e^{-(t-1)}sin(t-1)u(t-1) + e^{-(t+1)}sin(t+1)u(t+1)\\
+        \end{split}
+    \end{equation}
+    \end{enumerate}
+
+\item %write the solution of q4
+    \begin{enumerate}
+    % Write your solutions in the following items.
+        \item Below, we find the solution for $y(t)$.
+    	\begin{equation}
+	\begin{split}
+		x(t) & = e^{-t}u(t)\\
+		h(t) & = e^{-2t}u(t)\\
+		y(t) & = x(t) \ast h(t)\\
+		& = \int_{-\infty}^{+\infty} e^{-\tau}u(\tau)e^{-3(t - \tau)}u(t - \tau)d\tau\\
+		& = \int_{0}^{+\infty} e^{-\tau}e^{-2(t - \tau)}u(t - \tau)d\tau\\
+		& = \int_{0}^{t} e^{-\tau}e^{-2(t - \tau)}d\tau\\
+		& = \int_{0}^{t} e^{-\tau}e^{-2t + 2\tau}d\tau\\
+		& = \int_{0}^{t} e^{-2t}e^{\tau}d\tau\\
+		& = e^{-2t} \int_{0}^{t} e^{\tau}d\tau\\
+		& = e^{-2t} \left( e^{t} -1 \right)\\
+		& = e^{-t} - e^{-2t} \\ 
+	\end{split}
+	\end{equation}
+    \item %write the solution of q4b
+        We are given $h(t) = e^{3t}u(t)$ and $x(t)=u(t)-u(t-1)$. To calculate $y(t)=x(t)*h(t)$, first divide $x(t)$ into three different parts since $x(t)$  behaves differently for $t>1$, $0\leq t \leq 1$ and $t<0$. \\
+    
+    For $t<1$, we can easily see that $y(t)=0$ since $x(t)$ and $h(t)$ has no intersection area. \\
+    
+    For $0 \leq t \leq 1$ part we have $x(t) = 1$ : 
+    \begin{align*}
+        y(t) &= x(t)*h(t) \\
+        &= \int_0^t 1 \times e^{3(t - \tau)}d\tau \\
+        &= e^{3t} \int_0^t e^{-3 \tau}d\tau \\
+        &= (e^{3t})\biggr\rvert_0^t \frac{e^{-3t}}{-3} \\
+        &= \dfrac{e^{3t}}{3} - \dfrac{1}{3} 
+    \end{align*}
+    For $2 < t$ part we have $x(t) = 1$ : 
+    \begin{align*}
+        y(t) &= x(t)*h(t) \\
+        &= \int_0^1 1 \times e^{3(t - \tau)}d\tau \\
+        &= e^3t \int_0^1 e^{-3 \tau}d\tau \\
+        &= (e^{3t})\biggr\rvert_0^1 \frac{e^{-3t}}{-3} \\
+        &=  \dfrac{e^{3t-3}}{-3} + \dfrac{e^{3t}}{3}
+    \end{align*}
+	After combining three cases, we have the following as the result  $y(t)$:
+
+    	\begin{equation}
+		y(t) = \begin{cases}  0 &\mbox{if } t < 0 \\ 
+						 \dfrac{e^{3t}}{3} - \dfrac{1}{3}  & \mbox{if } 0 \leq t \leq 1 \\ \\
+					 	 \dfrac{e^{3t-3}}{-3} + \dfrac{e^{3t}}{3}& \mbox{if }  1 < t \end{cases}
+	\end{equation}
+    \end{enumerate}
+\newpage
+\item %write the solution of q5
+    \begin{enumerate}
+    % Write your solutions in the following items.
+    \item %write the solution of q5a
+    The characteristic equation of this equation is the following
+    \begin{equation}
+	\begin{split}
+		2r^2-3r+1 &= 0 \\
+		(2r - 1) (r - 1) &= 0 \\
+		r_1 = \dfrac{1}{2}, \ 	r_2 & = 1
+	\end{split}	
+    \end{equation}
+    Therefore,
+    \begin{equation}
+	\begin{split}
+		y[n] & = A(\dfrac{1}{2})^n + B(1^n) \\
+		y[0] & = A + B = 1 \\
+		y[1] & = \dfrac{A}{2} + B = 0 \\
+		A & = 2 \\
+		B & = -1 
+	\end{split}	
+    \end{equation}
+    So the solution is: \\
+    \begin{equation}
+    \begin{split}
+	y[n] &= 2^{-n+1} - (1^n) \\
+	 &= 2^{1-n} - 1
+	\end{split}
+    \end{equation}
+    \item %write the solution of q5b
+    The characteristic equation of this equation is the following\\
+    \begin{equation}
+	\begin{split}
+	    \alpha ^{3}-3\alpha ^{2}+4\alpha -2 = 0\\
+	    [(\alpha-1)^2+1](\alpha-1) &= 0\\
+	    \alpha_1 = 1, \ \alpha_2 = 1+i, \ \alpha_3 = 1-i\\
+	\end{split}	
+    \end{equation}
+    \begin{equation}
+	\begin{split}
+        y(t) &= K_1 e^t + K_2 e^{(1+i)t} + K_3 e^{(1-i)t}\\
+	    y(t) &= K_1 e^t + K_2 e^t cos(t) + K_3 e^t sin(t)\\
+	    y'(t) &= K_1 e^t + e^t [(K_2 + K_3) cos(t) + (K_3 - K_2) sin(t)]\\
+	    y''(t) &= K_1 e^t + e^t [2K_3 cos(t) - 2K_2 sin(t)]\\
+	    y(0) &= K_1 + K_2 = 3\\
+	    y'(0) &= K_1 + K_2 + K_3 = -2\\
+	    y''(0) &= K_1 + 2K_3 = 2\\
+	    K_1 &= 6, \ K_2 = -3, \ K_3 = -2\\
+	    y(t) &= 6e^t -2 e^t cost(t) -3 e^t sin(t)\\
+	\end{split}	
+    \end{equation}
+    \end{enumerate}
+
+
+\item %write the solution of q6
+    \begin{enumerate}
+    % Write your solutions in the following items.
+    \item %write the solution of q6a
+    Consider the given equation:
+    \begin{equation}
+	\begin{split}
+	w[n] - \dfrac{1}{2} w[n-1] & =  x[n] \\
+	w[n] & = x[n]+ \dfrac{1}{2}w[n-1] \\
+\end{split}
+	\end{equation}
+	We need the previous value of the w,w[n-1], to calculate the current value. Therefore, we need an initial condition to start recursion. \\
+	 \begin{equation}
+	\begin{split}
+	 x[n] = K \delta[n] \\
+	\end{split}
+	\end{equation}
+	Since $x[n]<0$ for $n \leq -1$, the initial condition implies that w[n]=0 for $n\leq -1$. So, we have initial condition as w[-1] =0. By starting from there,we solve for other values of y[n] for $n\geq 0 : $\\
+	
+	\begin{equation}
+	\begin{split}
+	 w[0] = x[0] + \dfrac{1}{2}y[-1] &= K \\
+	 w[1] = x[1] + \dfrac{1}{2}y[0] = \dfrac{1}{2}K  \\
+	 w[2] = x[2] + \dfrac{1}{2}y[1] = (\dfrac{1}{2})^2 K \\
+	\end{split}
+	\end{equation}
+	After iterating n times:\\
+	\begin{equation}
+	\begin{split}
+	 w[n] = x[n] + \dfrac{1}{2}y[n-1] &= (\dfrac{1}{2})^n K\\
+	\end{split}
+	\end{equation}
+	Condition of the initial rest is LTI, its input output behavior is charachterized by its impulse response.By setting K=1, we see that the impulse response for the system considered in question is: \\
+	\begin{equation}
+	\begin{split}
+	 h_0[n] = (\dfrac{1}{2})^n u[n] \\
+	\end{split}
+	\end{equation}
+	
+    \item %write the solution of q6b
+    Overall response of this system is convolution of the all individual responses.There we get:
+    \begin{equation}
+	\begin{split}
+    \sum_{n=-\infty}^{\infty} (\dfrac{1}{2})^k  (\dfrac{1}{2})^{n-k} u[k]u[n-k]
+	\end{split}
+	\end{equation}
+	Then we change interval to eliminate step functions:
+	\begin{equation}
+	\begin{split}
+    \sum_{n=0}^{k} (\dfrac{1}{2})^k  (\dfrac{1}{2})^{n-k}
+	\end{split}
+	\end{equation}
+	After following calculations we've found overall impulse response h[n]:
+	\begin{equation}
+	\begin{split}
+    h[n] &= \sum_{n=0}^{k} (\dfrac{1}{2})^k  (\dfrac{1}{2})^{n-k} \\
+    &= \sum_{n=0}^{k} (\dfrac{1}{2})^n = (n+1)(\dfrac{1}{2})^n
+	\end{split}
+	\end{equation}
+    \item %write the solution of q6c
+    Since both responses are $h_0[n]$. We know from (part a) that: \\
+    \begin{equation}
+	\begin{split}
+	 y[n] = w[n] + \dfrac{1}{2}y[n-1]
+	\end{split}
+	\end{equation}
+	We can write same equation between w and y, by replacing y with w, and w with x. Then we get: \\
+	\begin{equation}
+	\begin{split}
+	 w[n] = x[n] + \dfrac{1}{2}w[n-1]
+	\end{split}
+	\end{equation}
+    \end{enumerate}
+    To eliminate w's in the final equation. Since the system is LTI, we can use time invariance.Therefore, first we leave w alone in equation, then do time shift. \\
+    \begin{equation}
+	\begin{split}
+	 w[n] &= y[n] - \dfrac{1}{2}y[n-1] \\
+	 w[n-1] &= y[n-1] - \dfrac{1}{2}y[n-2] \\
+	\end{split}
+	\end{equation}
+	Then we put them into equation 28. \\
+	\begin{equation}
+	\begin{split}
+	 y[n] - \dfrac{1}{2}y[n-1] &= x[n]+ \dfrac{1}{2}(y[n-1]- \dfrac{1}{2}y[n-2]) \\
+	 y[n] - \dfrac{1}{2}y[n-1] &= x[n] + \dfrac{y[n-1]}{2}- \dfrac{y[n-2]}{4} \\
+	 y[n] &= x[n]+y[n-1]- \dfrac{y[n-2]}{4}\\
+	 \end{split}
+	\end{equation}
+	
+
+\end{enumerate}
+\end{document}
+
